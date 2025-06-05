@@ -41,7 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "django_filters",
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'drf_yasg',
     "dds",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -133,3 +138,13 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = "users.Users"
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DATE_INPUT_FORMATS': ['%d-%m-%Y'],
+    'DATE_FORMAT': '%d-%m-%Y',
+}

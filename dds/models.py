@@ -1,5 +1,3 @@
-from datetime import timezone
-
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -59,7 +57,7 @@ class SubCategory(models.Model):
 
 class MoneyFlow(models.Model):
     """Модель для хранения записей о движении денежных средств"""
-    date = models.DateField(verbose_name="Дата операции", default=timezone.now)
+    date = models.DateField(auto_now_add=True, verbose_name="Дата операции")
     status = models.ForeignKey(Status, on_delete=models.PROTECT, verbose_name="Статус")
     flow_type = models.ForeignKey(FlowType, on_delete=models.PROTECT, verbose_name="Тип операции", null=False, blank=False)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name="Категория", null=False, blank=False)
