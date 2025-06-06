@@ -39,7 +39,7 @@ class StatusSerializer(serializers.ModelSerializer):
 class MoneyFlowSerializer(serializers.ModelSerializer):
     """сериализатор для класса движения ДС"""
 
-    date = serializers.DateField(format='%d-%m-%Y', input_formats=['%d-%m-%Y'])
+    date = serializers.DateField(format='%d.%m.%Y', input_formats=['%d.%m.%Y'])
 
     class Meta:
         model = MoneyFlow
@@ -53,3 +53,4 @@ class MoneyFlowSerializer(serializers.ModelSerializer):
         if data['category'].flow_type != data['flow_type']:
             raise serializers.ValidationError("Категория не принадлежит выбранному типу операции.")
         return data
+

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+from django.conf.global_settings import DATE_INPUT_FORMATS
 
 load_dotenv()
 
@@ -145,6 +146,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
-    'DATE_INPUT_FORMATS': ['%d-%m-%Y'],
-    'DATE_FORMAT': '%d-%m-%Y',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
+
+DATE_INPUT_FORMATS = ['%d.%m.%Y']

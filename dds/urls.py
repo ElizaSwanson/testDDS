@@ -1,7 +1,22 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import (
+    MoneyFlowViewSet,
+    StatusViewSet,
+    FlowTypeViewSet,
+    CategoryViewSet,
+    SubCategoryViewSet,
+)
 
-from .apps import DdsConfig
+app_name = "dds"
 
-app_name = DdsConfig.name
+router = DefaultRouter()
+router.register(r'moneyflows', MoneyFlowViewSet, 'moneyflow')
+router.register(r'statuses', StatusViewSet)
+router.register(r'flowtypes', FlowTypeViewSet)
+router.register(r'categories', CategoryViewSet)
+router.register(r'subcategories', SubCategoryViewSet)
 
-urlpatterns = []
+urlpatterns = [
+    path('', include(router.urls)),
+]

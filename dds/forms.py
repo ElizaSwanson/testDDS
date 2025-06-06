@@ -18,7 +18,7 @@ class MoneyFlowForm(forms.ModelForm):
                 format='%d.%m.%Y',
                 attrs={
                     'placeholder': 'дд.мм.гггг',
-                    'type': 'date'  # Можно оставить так для выбора через календарь в браузере
+                    'type': 'text'
                 }
             ),
             'status': forms.Select(),
