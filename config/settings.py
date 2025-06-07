@@ -14,6 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 from django.conf.global_settings import DATE_INPUT_FORMATS
+from datetime import timedelta
 
 load_dotenv()
 
@@ -144,7 +145,7 @@ AUTH_USER_MODEL = "users.Users"
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.AllowAny'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -152,3 +153,8 @@ REST_FRAMEWORK = {
 }
 
 DATE_INPUT_FORMATS = ['%d.%m.%Y']
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
+}

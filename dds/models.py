@@ -77,18 +77,16 @@ class MoneyFlow(models.Model):
         super().clean()
 
         # Проверка, что подкатегория связана с выбранной категорией
-        if self.subcategory and self.category:
-            if self.subcategory.category != self.category:
-                raise ValidationError({
-                    'subcategory': 'Подкатегория не связана с выбранной категорией.'
-                })
+        if self.subcategory.category != self.category:
+            raise ValidationError({
+                'subcategory': 'Подкатегория не связана с выбранной категорией.'
+            })
 
         # Проверка, что категория соответствует типу операции
-        if self.category and self.flow_type:
-            if self.category.flow_type != self.flow_type:
-                raise ValidationError({
-                    'category': 'Категория не соответствует выбранному типу операции.'
-                })
+        if self.category.flow_type != self.flow_type:
+            raise ValidationError({
+                'category': 'Категория не соответствует выбранному типу операции.'
+            })
 
     class Meta:
         verbose_name = "Движение денежных средств"

@@ -5,4 +5,8 @@ admin.site.register(Status)
 admin.site.register(FlowType)
 admin.site.register(Category)
 admin.site.register(SubCategory)
-admin.site.register(MoneyFlow)
+
+@admin.register(MoneyFlow)
+class FlowAdmin(admin.ModelAdmin):
+    list_filter = ('date', 'status', 'flow_type', 'category', 'subcategory')
+    search_fields = ('comment', 'date',)
