@@ -1,16 +1,14 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
-    MoneyFlowView,
-    FlowTypeViewSet, CategoryView, CategoryCreateAPIView, CategoryDestroyAPIView, CategoryDetailView,
+    MoneyFlowView, CategoryView, CategoryCreateAPIView, CategoryDestroyAPIView, CategoryDetailView,
     SubCategoryViewSet, MoneyFlowDetailView, MoneyFlowCreateAPIView, MoneyFlowDestroyAPIView, StatusView,
-    StatusDetailView, StatusDestroyAPIView, StatusCreateAPIView,
+    StatusDetailView, StatusDestroyAPIView, StatusCreateAPIView, FlowtypeDetailView, FlowtypeView, FlowtypeCreateAPIView, FlowtypeDestroyAPIView,
 )
 
 app_name = "dds"
 
 router = DefaultRouter()
-router.register(r'flowtypes', FlowTypeViewSet)
 router.register(r'subcategories', SubCategoryViewSet)
 
 urlpatterns = [
@@ -30,4 +28,9 @@ urlpatterns = [
     path('category/<int:pk>/', CategoryDetailView.as_view(), name="category-detail"),
     path('category/<int:pk>/delete/',CategoryDestroyAPIView.as_view(), name='category-delete'),
     path('category/create/', CategoryCreateAPIView.as_view(), name='category-create'),
+    #типы категорий
+    path('flowtype/', FlowtypeView.as_view(), name='flowtype'),
+    path('flowtype/<int:pk>/', FlowtypeDetailView.as_view(), name="flowtype-detail"),
+    path('flowtype/<int:pk>/delete/', FlowtypeDestroyAPIView.as_view(), name='flowtype-delete'),
+    path('flowtype/create/', FlowtypeCreateAPIView.as_view(), name='flowtype-create'),
 ]

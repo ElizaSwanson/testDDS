@@ -146,6 +146,7 @@ class StatusCreateAPIView(generics.ListCreateAPIView):
 
 
 #вью для категорий
+
 class CategoryView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'category_list.html'
@@ -206,12 +207,70 @@ class CategoryCreateAPIView(generics.ListCreateAPIView):
         else:
             return Response({'serializer': serializer})
 
+#тип операций (flowtype)
 
-class FlowTypeViewSet(viewsets.ModelViewSet):
+class FlowtypeView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'flowtype_list.html'
+
+    def get(self, request):
+        queryset = FlowType.objects.all()
+        return Response({'flowtypes': queryset})
+
+class FlowtypeDetailView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'flowtype_detail.html'
+
+
+    def get(self, request, pk):
+        queryset = get_object_or_404(FlowType, pk=pk)
+        serializer = FlowTypeSerializer(queryset)
+        return Response({'serializer': serializer, 'obj': queryset})
+
+    def post(self, request, pk):
+        queryset = get_object_or_404(FlowType, pk=pk)
+        serializer = FlowTypeSerializer(queryset, data=request.data)
+        if not serializer.is_valid():
+            return Response({'serializer': serializer, 'obj': queryset})
+        serializer.save()
+        return redirect('/flowtype/')
+
+class FlowtypeDestroyAPIView(generics.DestroyAPIView):
     queryset = FlowType.objects.all()
     serializer_class = FlowTypeSerializer
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'flowtype_delete.html'
 
 
+    def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        return Response({'obj': obj})
+
+    def post(self, request, *args, **kwargs):
+        self.destroy(request, *args, **kwargs)
+        return redirect('/flowtype/')
+
+
+class FlowtypeCreateAPIView(generics.ListCreateAPIView):
+    queryset = FlowType.objects.all()
+    serializer_class = FlowTypeSerializer
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'flowtype_create.html'
+
+    def get(self, request, *args, **kwargs):
+        serializer = self.get_serializer()
+        return Response({'serializer': serializer})
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return redirect('/flowtype/')
+        else:
+            return Response({'serializer': serializer})
+
+
+#подкатегории
 class SubCategoryViewSet(viewsets.ModelViewSet):
     queryset = SubCategory.objects.all()
     serializer_class = SubCategorySerializer
