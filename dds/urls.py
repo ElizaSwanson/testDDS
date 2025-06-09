@@ -1,15 +1,13 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
-    MoneyFlowView, CategoryView, CategoryCreateAPIView, CategoryDestroyAPIView, CategoryDetailView,
-    SubCategoryViewSet, MoneyFlowDetailView, MoneyFlowCreateAPIView, MoneyFlowDestroyAPIView, StatusView,
-    StatusDetailView, StatusDestroyAPIView, StatusCreateAPIView, FlowtypeDetailView, FlowtypeView, FlowtypeCreateAPIView, FlowtypeDestroyAPIView,
+    MoneyFlowView, CategoryView, CategoryCreateAPIView, CategoryDestroyAPIView, CategoryDetailView, MoneyFlowDetailView, MoneyFlowCreateAPIView, MoneyFlowDestroyAPIView, StatusView,
+    StatusDetailView, StatusDestroyAPIView, StatusCreateAPIView, FlowtypeDetailView, FlowtypeView, FlowtypeCreateAPIView, FlowtypeDestroyAPIView, SubcategoryCreateAPIView, SubcategoryDestroyAPIView, SubcategoryView, SubcategoryDetailView
 )
 
 app_name = "dds"
 
 router = DefaultRouter()
-router.register(r'subcategories', SubCategoryViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -26,11 +24,16 @@ urlpatterns = [
     #категории
     path('category/', CategoryView.as_view(), name='category'),
     path('category/<int:pk>/', CategoryDetailView.as_view(), name="category-detail"),
-    path('category/<int:pk>/delete/',CategoryDestroyAPIView.as_view(), name='category-delete'),
+    path('category/<int:pk>/delete/', CategoryDestroyAPIView.as_view(), name='category-delete'),
     path('category/create/', CategoryCreateAPIView.as_view(), name='category-create'),
     #типы категорий
     path('flowtype/', FlowtypeView.as_view(), name='flowtype'),
     path('flowtype/<int:pk>/', FlowtypeDetailView.as_view(), name="flowtype-detail"),
     path('flowtype/<int:pk>/delete/', FlowtypeDestroyAPIView.as_view(), name='flowtype-delete'),
     path('flowtype/create/', FlowtypeCreateAPIView.as_view(), name='flowtype-create'),
+    #подкатегории
+    path('subcategory/', SubcategoryView.as_view(), name='subcategory'),
+    path('subcategory/<int:pk>/', SubcategoryDetailView.as_view(), name="subcategory-detail"),
+    path('subcategory/<int:pk>/delete/', SubcategoryDestroyAPIView.as_view(), name='subcategory-delete'),
+    path('subcategory/create/', SubcategoryCreateAPIView.as_view(), name='subcategory-create'),
 ]

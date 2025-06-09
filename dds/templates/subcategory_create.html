@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load rest_framework %}
+{% block content %}
+<form action="{% url 'dds:subcategory-create' %}" method="post">
+    {% csrf_token %}
+    {% render_form serializer %}
+    <input type="submit" value="Сохранить">
+</form>
+{% endblock %}

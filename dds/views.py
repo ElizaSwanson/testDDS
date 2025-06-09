@@ -271,6 +271,62 @@ class FlowtypeCreateAPIView(generics.ListCreateAPIView):
 
 
 #подкатегории
-class SubCategoryViewSet(viewsets.ModelViewSet):
+class SubcategoryView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'subcategory_list.html'
+
+    def get(self, request):
+        queryset = SubCategory.objects.all()
+        return Response({'subcategories': queryset})
+
+class SubcategoryDetailView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'subcategory_detail.html'
+
+
+    def get(self, request, pk):
+        queryset = get_object_or_404(SubCategory, pk=pk)
+        serializer = SubCategorySerializer(queryset)
+        return Response({'serializer': serializer, 'obj': queryset})
+
+    def post(self, request, pk):
+        queryset = get_object_or_404(SubCategory, pk=pk)
+        serializer = SubCategorySerializer(queryset, data=request.data)
+        if not serializer.is_valid():
+            return Response({'serializer': serializer, 'obj': queryset})
+        serializer.save()
+        return redirect('/subcategory/')
+
+class SubcategoryDestroyAPIView(generics.DestroyAPIView):
     queryset = SubCategory.objects.all()
     serializer_class = SubCategorySerializer
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'subcategory_delete.html'
+
+
+    def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        return Response({'obj': obj})
+
+    def post(self, request, *args, **kwargs):
+        self.destroy(request, *args, **kwargs)
+        return redirect('/subcategory/')
+
+
+class SubcategoryCreateAPIView(generics.ListCreateAPIView):
+    queryset = SubCategory.objects.all()
+    serializer_class = SubCategorySerializer
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'subcategory_create.html'
+
+    def get(self, request, *args, **kwargs):
+        serializer = self.get_serializer()
+        return Response({'serializer': serializer})
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return redirect('/subcategory/')
+        else:
+            return Response({'serializer': serializer})

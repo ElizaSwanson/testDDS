@@ -10,7 +10,7 @@ class SubCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SubCategory
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'category']
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -20,7 +20,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ['id', 'name', 'flow_type', 'subcategories']
+        fields = ['id', 'name', 'flow_type',]
 
 
 class FlowTypeSerializer(serializers.ModelSerializer):

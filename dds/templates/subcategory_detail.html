@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load rest_framework %}
+{% block content %}
+<form action="{% url 'dds:subcategory-detail' pk=obj.pk %}" method="post">
+    {% csrf_token %}
+    {% render_form serializer %}
+    <input type="submit" class="btn btn-primary" value="Сохранить">
+    <a href="{% url 'dds:subcategory-delete' pk=obj.pk %}" class="btn btn-danger">Удалить</a>
+</form>
+{% endblock %}
