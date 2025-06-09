@@ -4,6 +4,7 @@
 <form action="{% url 'dds:moneyflow-detail' pk=obj.pk %}" method="post">
     {% csrf_token %}
     {% render_form serializer %}
-    <input type="submit" value="Сохранить">
+    <input type="submit" class="btn btn-primary" value="Сохранить">
+    <a href="{% url 'dds:moneyflow-delete' pk=obj.pk %}" class="btn btn-danger">Удалить</a>
 </form>
 {% endblock %}

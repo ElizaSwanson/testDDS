@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from rest_framework import viewsets, filters, status
+from rest_framework import viewsets, filters, status, generics
+from rest_framework.generics import CreateAPIView, ListCreateAPIView
 from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.reverse import reverse_lazy
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -15,11 +17,6 @@ from .serializers import (
 )
 from django_filters.rest_framework import DjangoFilterBackend
 
-#class MoneyFlowViewSet(viewsets.ModelViewSet):
-    #queryset = MoneyFlow.objects.all().order_by('-date')
-    #serializer_class = MoneyFlowSerializer
-    #filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    #filterset_fields = ['date', 'status', 'flow_type', 'category', 'subcategory']
 
 class MoneyFlowView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
@@ -51,20 +48,38 @@ class MoneyFlowDetailView(APIView):
         serializer.save()
         return redirect('moneyflow')
 
-class MoneyFlowCreateAPIView(APIView):
+class MoneyFlowCreateAPIView(generics.ListCreateAPIView):
+    queryset = MoneyFlow.objects.all()
+    serializer_class = MoneyFlowSerializer
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'moneyflow_create.html'
 
-    def post(self, request):
-        if request.method == 'POST':
-            serializer = MoneyFlowSerializer(data=request.POST)
-            if serializer.is_valid():
-                serializer.save()
-                return redirect('moneyflow_list.html')
-        else:
-            serializer = MoneyFlowSerializer()
+    def get(self, request, *args, **kwargs):
+        serializer = self.get_serializer()
+        return Response({'serializer': serializer})
 
-        return render(request, 'moneyflow_create.html', {'serializer': serializer})
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return redirect('/moneyflows/')
+        else:
+            return Response({'serializer': serializer})
+
+class MoneyFlowDestroyAPIView(generics.DestroyAPIView):
+    queryset = MoneyFlow.objects.all()
+    serializer_class = MoneyFlowSerializer
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'moneyflow_delete.html'
+
+
+    def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        return Response({'obj': obj})
+
+    def post(self, request, *args, **kwargs):
+        self.destroy(request, *args, **kwargs)
+        return redirect('/moneyflows/')
 
 class StatusViewSet(viewsets.ModelViewSet):
     queryset = Status.objects.all()

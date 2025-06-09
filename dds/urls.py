@@ -5,13 +5,12 @@ from .views import (
     StatusViewSet,
     FlowTypeViewSet,
     CategoryViewSet,
-    SubCategoryViewSet, MoneyFlowDetailView, MoneyFlowCreateAPIView,
+    SubCategoryViewSet, MoneyFlowDetailView, MoneyFlowCreateAPIView, MoneyFlowDestroyAPIView,
 )
 
 app_name = "dds"
 
 router = DefaultRouter()
-#router.register(r'moneyflows', MoneyFlowView, 'moneyflow')
 router.register(r'statuses', StatusViewSet)
 router.register(r'flowtypes', FlowTypeViewSet)
 router.register(r'categories', CategoryViewSet)
@@ -21,5 +20,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('moneyflows/', MoneyFlowView.as_view(), name='moneyflow'),
     path('moneyflows/<int:pk>/', MoneyFlowDetailView.as_view(), name='moneyflow-detail'),
-    path('moneyflows/create/', MoneyFlowCreateAPIView.as_view(), name='moneyflow-create')
+    path('moneyflows/create/', MoneyFlowCreateAPIView.as_view(), name='moneyflow-create'),
+    path('moneyflows/<int:pk>/delete/', MoneyFlowDestroyAPIView.as_view(), name='moneyflow-delete'),
 ]

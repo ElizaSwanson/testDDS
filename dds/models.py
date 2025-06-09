@@ -1,3 +1,6 @@
+from datetime import *
+from django.utils import timezone
+
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -57,7 +60,7 @@ class SubCategory(models.Model):
 
 class MoneyFlow(models.Model):
     """Модель для хранения записей о движении денежных средств"""
-    date = models.DateField(auto_now_add=True, verbose_name="Дата операции")
+    date = models.DateField(verbose_name="Дата операции")
     status = models.ForeignKey(Status, on_delete=models.PROTECT, verbose_name="Статус")
     flow_type = models.ForeignKey(FlowType, on_delete=models.PROTECT, verbose_name="Тип операции", null=False, blank=False)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name="Категория", null=False, blank=False)
@@ -87,6 +90,11 @@ class MoneyFlow(models.Model):
             raise ValidationError({
                 'category': 'Категория не соответствует выбранному типу операции.'
             })
+        if self.amount < 0:
+            raise ValidationError({'amount': 'Сумма не может быть отрицательной'})
+
+        if self.date < timezone.now().date():
+            raise ValidationError({'date': 'Дата не может быть больше текущей.'})
 
     class Meta:
         verbose_name = "Движение денежных средств"
