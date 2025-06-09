@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load rest_framework %}
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5>Список статусов</h5>
+        <a href="{% url 'dds:status-create' %}" class="btn btn-success">Добавить статус</a>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for status in statuses %}
+                <tr>
+                    <td>{{ status.id }}</td>
+                    <td>{{ status.name }}</td>
+                    <td>
+                        <a href="{% url 'dds:status-detail' status.pk %}" class="btn btn-sm btn-primary">Изменить</a>
+                        <a href="{% url 'dds:status-delete' status.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

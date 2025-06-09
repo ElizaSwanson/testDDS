@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load rest_framework %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5>Подтверждение удаления</h5>
+    </div>
+    <div class="card-body">
+        <p>Вы уверены, что хотите удалить статус "{{ object }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Удалить</button>
+            <a href="{% url 'dds:status' %}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -17,6 +17,7 @@ from .serializers import (
 )
 from django_filters.rest_framework import DjangoFilterBackend
 
+#вью для движения денежных средств
 
 class MoneyFlowView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
@@ -81,17 +82,135 @@ class MoneyFlowDestroyAPIView(generics.DestroyAPIView):
         self.destroy(request, *args, **kwargs)
         return redirect('/moneyflows/')
 
-class StatusViewSet(viewsets.ModelViewSet):
+
+#вью для статусов
+class StatusView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'status_list.html'
+
+    def get(self, request):
+        queryset = Status.objects.all()
+        return Response({'statuses': queryset})
+
+class StatusDetailView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'status_detail.html'
+
+
+    def get(self, request, pk):
+        queryset = get_object_or_404(Status, pk=pk)
+        serializer = StatusSerializer(queryset)
+        return Response({'serializer': serializer, 'obj': queryset})
+
+    def post(self, request, pk):
+        queryset = get_object_or_404(Status, pk=pk)
+        serializer = StatusSerializer(queryset, data=request.data)
+        if not serializer.is_valid():
+            return Response({'serializer': serializer, 'obj': queryset})
+        serializer.save()
+        return redirect('/status/')
+
+class StatusDestroyAPIView(generics.DestroyAPIView):
     queryset = Status.objects.all()
     serializer_class = StatusSerializer
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'status_delete.html'
+
+
+    def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        return Response({'obj': obj})
+
+    def post(self, request, *args, **kwargs):
+        self.destroy(request, *args, **kwargs)
+        return redirect('/status/')
+
+
+class StatusCreateAPIView(generics.ListCreateAPIView):
+    queryset = Status.objects.all()
+    serializer_class = StatusSerializer
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'status_create.html'
+
+    def get(self, request, *args, **kwargs):
+        serializer = self.get_serializer()
+        return Response({'serializer': serializer})
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return redirect('/status/')
+        else:
+            return Response({'serializer': serializer})
+
+
+#вью для категорий
+class CategoryView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'category_list.html'
+
+    def get(self, request):
+        queryset = Category.objects.all()
+        return Response({'categories': queryset})
+
+class CategoryDetailView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'category_detail.html'
+
+
+    def get(self, request, pk):
+        queryset = get_object_or_404(Category, pk=pk)
+        serializer = CategorySerializer(queryset)
+        return Response({'serializer': serializer, 'obj': queryset})
+
+    def post(self, request, pk):
+        queryset = get_object_or_404(Category, pk=pk)
+        serializer = CategorySerializer(queryset, data=request.data)
+        if not serializer.is_valid():
+            return Response({'serializer': serializer, 'obj': queryset})
+        serializer.save()
+        return redirect('/category/')
+
+class CategoryDestroyAPIView(generics.DestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'category_delete.html'
+
+
+    def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        return Response({'obj': obj})
+
+    def post(self, request, *args, **kwargs):
+        self.destroy(request, *args, **kwargs)
+        return redirect('/category/')
+
+
+class CategoryCreateAPIView(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'category_create.html'
+
+    def get(self, request, *args, **kwargs):
+        serializer = self.get_serializer()
+        return Response({'serializer': serializer})
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return redirect('/category/')
+        else:
+            return Response({'serializer': serializer})
+
 
 class FlowTypeViewSet(viewsets.ModelViewSet):
     queryset = FlowType.objects.all()
     serializer_class = FlowTypeSerializer
 
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
 
 class SubCategoryViewSet(viewsets.ModelViewSet):
     queryset = SubCategory.objects.all()
