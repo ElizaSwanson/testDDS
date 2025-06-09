@@ -1,0 +1,23 @@
+[
+{
+    "model": "dds.status",
+    "pk": 1,
+    "fields": {
+        "name": "Бизнес"
+    }
+},
+{
+    "model": "dds.status",
+    "pk": 2,
+    "fields": {
+        "name": "Личное"
+    }
+},
+{
+    "model": "dds.status",
+    "pk": 4,
+    "fields": {
+        "name": "Налог"
+    }
+}
+]

@@ -1,0 +1,34 @@
+[
+{
+    "model": "dds.subcategory",
+    "pk": 1,
+    "fields": {
+        "name": "Avito",
+        "category": 1
+    }
+},
+{
+    "model": "dds.subcategory",
+    "pk": 2,
+    "fields": {
+        "name": "Farpost",
+        "category": 1
+    }
+},
+{
+    "model": "dds.subcategory",
+    "pk": 3,
+    "fields": {
+        "name": "VPS",
+        "category": 2
+    }
+},
+{
+    "model": "dds.subcategory",
+    "pk": 4,
+    "fields": {
+        "name": "Proxy",
+        "category": 2
+    }
+}
+]

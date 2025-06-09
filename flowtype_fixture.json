@@ -1,0 +1,16 @@
+[
+{
+    "model": "dds.flowtype",
+    "pk": 1,
+    "fields": {
+        "name": "Пополнение"
+    }
+},
+{
+    "model": "dds.flowtype",
+    "pk": 2,
+    "fields": {
+        "name": "Списание"
+    }
+}
+]

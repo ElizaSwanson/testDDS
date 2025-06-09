@@ -1,0 +1,26 @@
+[
+{
+    "model": "dds.category",
+    "pk": 1,
+    "fields": {
+        "name": "Маркетинг",
+        "flow_type": 2
+    }
+},
+{
+    "model": "dds.category",
+    "pk": 2,
+    "fields": {
+        "name": "Инфраструктура",
+        "flow_type": 1
+    }
+},
+{
+    "model": "dds.category",
+    "pk": 3,
+    "fields": {
+        "name": "Продукты",
+        "flow_type": 2
+    }
+}
+]

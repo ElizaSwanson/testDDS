@@ -1,0 +1,67 @@
+[
+{
+    "model": "dds.moneyflow",
+    "pk": 1,
+    "fields": {
+        "date": "2025-06-05",
+        "status": 1,
+        "flow_type": 1,
+        "category": 2,
+        "subcategory": 3,
+        "amount": "1000.00",
+        "comment": ""
+    }
+},
+{
+    "model": "dds.moneyflow",
+    "pk": 4,
+    "fields": {
+        "date": "2025-06-05",
+        "status": 1,
+        "flow_type": 1,
+        "category": 2,
+        "subcategory": 4,
+        "amount": "1000.00",
+        "comment": null
+    }
+},
+{
+    "model": "dds.moneyflow",
+    "pk": 11,
+    "fields": {
+        "date": "2025-06-09",
+        "status": 1,
+        "flow_type": 2,
+        "category": 1,
+        "subcategory": 1,
+        "amount": "50.00",
+        "comment": ""
+    }
+},
+{
+    "model": "dds.moneyflow",
+    "pk": 12,
+    "fields": {
+        "date": "2025-06-09",
+        "status": 1,
+        "flow_type": 2,
+        "category": 1,
+        "subcategory": 1,
+        "amount": "1000000.00",
+        "comment": ""
+    }
+},
+{
+    "model": "dds.moneyflow",
+    "pk": 13,
+    "fields": {
+        "date": "2025-06-05",
+        "status": 1,
+        "flow_type": 2,
+        "category": 1,
+        "subcategory": 1,
+        "amount": "100001.00",
+        "comment": ""
+    }
+}
+]
